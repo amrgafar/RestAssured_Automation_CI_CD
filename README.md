@@ -6,16 +6,22 @@ The tests are integrated with a GitHub Actions CI/CD pipeline, which automatical
 The test suite focuses on "thinking like an ethical hacker"  to find vulnerabilities and bugs. Tests are implemented for the following endpoints:
 
 
+
+
 API #1: Create Pickup (POST /api/v2/pickups) 
 
 
 P-LOGIC-01: Tests for negative numberOfParcels to prevent a "credit" bug.
 
 
+
+
 API #2: Update Bank Info (POST /api/v2/businesses/add-bank-info) 
 
 
 B-LOGIC-01: Tests for attempting to update info without an OTP.
+
+
 
 
 API #3: Forget Password (POST /api/v2/users/forget-password) 
@@ -75,11 +81,9 @@ Click "New repository secret" and create the following two secrets:
 Name: BOSTA_PICKUP_TOKEN
 
 
-Value: (Paste the token from )
 
 Name: BOSTA_BANK_TOKEN
 
 
-Value: (Paste the token from )
 
 The workflow will securely inject these secrets as environment variables, allowing your tests to authenticate and run successfully.
