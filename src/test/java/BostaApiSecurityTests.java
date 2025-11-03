@@ -23,7 +23,7 @@ public class BostaApiSecurityTests {
     }
 
     /**
-     * Test Case: P-LOGIC-01 (API #1)
+     * Test Case: TC_01 (API #1)
      * Description: Submitting a negative 'numberOfParcels' should be rejected.
      * Expected: HTTP 400 Bad Request (or similar error), NOT 200 or 500.
      */
@@ -52,7 +52,7 @@ public class BostaApiSecurityTests {
     }
 
     /**
-     * Test Case: B-LOGIC-01 (API #2)
+     * Test Case: TC_01 (API #2)
      * Description: Attempting to update bank info without the OTP field.
      * Expected: HTTP 400 (or 422) error, as the 'paymentInfoOtp' is missing.
      */
@@ -67,7 +67,6 @@ public class BostaApiSecurityTests {
 
         JSONObject requestBody = new JSONObject();
         requestBody.put("bankInfo", bankInfo);
-        // We are *intentionally* not adding 'paymentInfoOtp'
 
         given()
                 .header("Authorization", BANK_AUTH_TOKEN)
@@ -81,7 +80,7 @@ public class BostaApiSecurityTests {
     }
 
     /**
-     * Test Case: F-PARAM-01 (API #3)
+     * Test Case: TC_01 (API #3)
      * Description: Calling 'forget-password' with an empty JSON body.
      * Expected: HTTP 400 Bad Request (or 500 if unhandled).
      */
@@ -90,7 +89,7 @@ public class BostaApiSecurityTests {
         String emptyBody = "{}";
 
         given()
-                .header("Authorization", PICKUP_AUTH_TOKEN) // Using the token from the cURL
+                .header("Authorization", PICKUP_AUTH_TOKEN) 
                 .contentType(ContentType.JSON)
                 .body(emptyBody)
                 .when()
@@ -101,7 +100,7 @@ public class BostaApiSecurityTests {
     }
 
     /**
-     * Bonus Test: Generate a new token (from API #2 instructions)
+     * (API #2)
      * This proves we can call an endpoint and extract its response.
      */
     @Test
