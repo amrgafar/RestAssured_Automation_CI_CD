@@ -1,0 +1,47 @@
+# .github/workflows/api-tests.yml
+
+name: 'Bosta API Security & QA Tests'
+
+# Triggers the workflow on pushes to the main branch or on any Pull Request
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  run-api-tests:
+    # Use the latest Ubuntu runner
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checks out your repository's code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Sets up the Java environment (e.g., JDK 11)
+      - name: Set up JDK 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      # 3. Run the Maven tests
+      # This is the most important step. It runs 'mvn test',
+      # which executes your Rest Assured Java class.
+      - name: Run Rest Assured Tests
+        # Inject the GitHub Secrets as environment variables
+        # The Java code (System.getenv()) will read these.
+        env:
+          BOSTA_PICKUP_TOKEN: ${{ secrets.BOSTA_PICKUP_TOKEN }}
+          BOSTA_BANK_TOKEN: ${{ secrets.BOSTA_BANK_TOKEN }}
+        run: mvn test
+
+      # 4. (Optional) Upload test results
+      - name: Upload Test Results
+        if: always() # This step runs even if the 'mvn test' step fails
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports
+          path: target/surefire-reports/
